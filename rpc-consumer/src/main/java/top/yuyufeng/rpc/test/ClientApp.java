@@ -11,5 +11,15 @@ public class ClientApp {
         HelloService helloService = RemoteServiceImpl.newRemoteProxyObject(HelloService.class);
         String result = helloService.sayHello("yyf");
         System.out.println(result);
+        for (int i = 0; i < 10; i++) {
+            new Thread(){
+                @Override
+                public void run() {
+                    String result = helloService.sayHello("yyf");
+                    System.out.println(result);
+                }
+            }.start();
+        }
+
     }
 }

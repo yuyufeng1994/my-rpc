@@ -19,6 +19,15 @@ public class RpcContext implements Serializable{
     private InetSocketAddress localAddress;
 
     private InetSocketAddress remoteAddress;
+    private long timeout = 10000; //超时 默认10秒
+
+    public long getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(long timeout) {
+        this.timeout = timeout;
+    }
 
     public String getServiceName() {
         return serviceName;
@@ -77,6 +86,7 @@ public class RpcContext implements Serializable{
                 ", arguments=" + Arrays.toString(arguments) +
                 ", localAddress=" + localAddress +
                 ", remoteAddress=" + remoteAddress +
+                ", timeout=" + timeout +
                 '}';
     }
 }
