@@ -1,4 +1,4 @@
-package top.yuyufeng.test.dynamicProxy;
+package top.yuyufeng.rpc.test.dynamicProxy;
 
 /**
  * created by yuyufeng on 2017/8/18.

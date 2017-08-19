@@ -1,4 +1,4 @@
-package top.yuyufeng.test.net;
+package top.yuyufeng.rpc.test.net;
 
 import java.io.Serializable;
 import java.util.Date;

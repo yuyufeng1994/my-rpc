@@ -1,4 +1,4 @@
-package top.yuyufeng.test.sample;
+package top.yuyufeng.rpc.test.sample;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

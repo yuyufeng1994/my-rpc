@@ -1,4 +1,4 @@
-package top.yuyufeng.rpc.common;
+package top.yuyufeng.rpc;
 
 import java.io.Serializable;
 import java.net.InetSocketAddress;

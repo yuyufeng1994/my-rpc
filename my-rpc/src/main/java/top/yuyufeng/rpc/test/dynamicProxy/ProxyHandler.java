@@ -1,4 +1,4 @@
-package top.yuyufeng.test.dynamicProxy;
+package top.yuyufeng.rpc.test.dynamicProxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

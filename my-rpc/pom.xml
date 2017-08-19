@@ -7,21 +7,10 @@
         <groupId>top.yuyufeng</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+    <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rpc-provider</artifactId>
-    <dependencies>
-        <dependency>
-            <groupId>top.yuyufeng</groupId>
-            <artifactId>rpc-service</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>top.yuyufeng</groupId>
-            <artifactId>my-rpc</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <artifactId>my-rpc</artifactId>
 
 
 </project>

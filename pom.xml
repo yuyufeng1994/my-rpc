@@ -12,6 +12,7 @@
         <module>rpc-consumer</module>
         <module>rpc-service</module>
         <module>rpc-provider</module>
+        <module>my-rpc</module>
     </modules>
 
     <dependencies>

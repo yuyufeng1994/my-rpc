@@ -1,4 +1,4 @@
-package top.yuyufeng.rpc.client;
+package top.yuyufeng.rpc.test;
 
 import top.yuyufeng.rpc.client.proxy.RemoteServiceImpl;
 import top.yuyufeng.rpc.service.HelloService;
