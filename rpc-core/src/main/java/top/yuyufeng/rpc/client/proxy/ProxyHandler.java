@@ -64,6 +64,7 @@ public class ProxyHandler implements InvocationHandler {
         } catch (TimeoutException e) {
             System.out.println("请求响应超时放弃..");
             release(socket, os, is);
+            future.cancel(true);
         }
         executor.shutdown();
         return result;

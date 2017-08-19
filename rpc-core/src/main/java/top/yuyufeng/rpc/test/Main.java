@@ -1,23 +1,28 @@
 package top.yuyufeng.rpc.test;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
 /**
  * created by yuyufeng on 2017/8/19.
  */
 public class Main {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        Future future = new FutureTask(new Callable() {
-
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        Future future = executor.submit(new Callable(){
             @Override
             public Object call() throws Exception {
+                Thread.sleep(2000);
+                System.out.println("Main.call");
                 return "success";
             }
         });
 
-        System.out.println(future.get());
+        try {
+            System.out.println(future.get(1000,TimeUnit.MILLISECONDS));
+        } catch (TimeoutException e) {
+            System.out.println("超时...");
+            future.cancel(true);
+        }
+        executor.shutdown();;
     }
 }
