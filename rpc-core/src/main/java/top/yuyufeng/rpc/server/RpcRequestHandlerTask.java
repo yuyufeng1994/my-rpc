@@ -30,7 +30,7 @@ public class RpcRequestHandlerTask implements Runnable {
         ObjectOutputStream os = null;
         ObjectInputStream is = null;
         try {
-            long time = 500 * new Random().nextInt(3);
+            long time = 500 * new Random().nextInt(5);
             is = new ObjectInputStream(socket.getInputStream());
             //读取第一部分数据
             RpcContext context = (RpcContext) is.readObject();
