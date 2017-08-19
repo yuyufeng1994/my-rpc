@@ -12,14 +12,18 @@ import java.net.Socket;
 /**
  * created by yuyufeng on 2017/8/19.
  */
-public class RpcRequestHandler implements Runnable {
+public class RpcRequestHandlerTask implements Runnable {
     private Socket socket;
-    public RpcRequestHandler(Socket accept) {
+    public RpcRequestHandlerTask(Socket accept) {
         this.socket = accept;
     }
 
     @Override
     public void run() {
+        acceptAndResponce();
+    }
+
+    private void acceptAndResponce() {
         ObjectOutputStream os = null;
         ObjectInputStream is = null;
         try {

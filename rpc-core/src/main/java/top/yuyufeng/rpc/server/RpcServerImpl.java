@@ -40,7 +40,7 @@ public class RpcServerImpl implements RpcServer {
             serverSocket = new ServerSocket(port);
             System.out.println("Rpc服务启动成功...");
             while (true) {
-                executor.execute(new RpcRequestHandler(serverSocket.accept()));
+                executor.execute(new RpcRequestHandlerTask(serverSocket.accept()));
                 System.out.println("执行一次响应.." + new Date());
             }
         } catch (IOException e) {

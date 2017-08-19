@@ -31,6 +31,10 @@ public class ProxyHandler implements InvocationHandler {
         rpcContext.setArguments(args);
         rpcContext.setParameterTypes(method.getParameterTypes());
 
+        return this.request(rpcContext);
+    }
+
+    private Object request(RpcContext rpcContext) throws ClassNotFoundException {
         Object result = null;
         Socket socket = null;
         ObjectOutputStream os = null;
