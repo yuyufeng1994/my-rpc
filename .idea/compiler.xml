@@ -8,14 +8,15 @@
         <outputRelativeToContentRoot value="true" />
         <module name="my-rpc" />
         <module name="rpc-consumer" />
+        <module name="rpc-core" />
         <module name="rpc-provider" />
         <module name="rpc-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
-      <module name="my-rpc" target="1.8" />
       <module name="rpc" target="1.8" />
       <module name="rpc-consumer" target="1.8" />
+      <module name="rpc-core" target="1.8" />
       <module name="rpc-provider" target="1.8" />
       <module name="rpc-service" target="1.8" />
     </bytecodeTargetLevel>
