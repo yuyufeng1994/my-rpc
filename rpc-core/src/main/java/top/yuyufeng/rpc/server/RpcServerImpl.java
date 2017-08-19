@@ -1,6 +1,6 @@
 package top.yuyufeng.rpc.server;
 
-import top.yuyufeng.rpc.exception.RPCException;
+import top.yuyufeng.rpc.exception.RpcException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -67,7 +67,7 @@ public class RpcServerImpl implements RpcServer {
         if (RegisterServicesCenter.getRegisterServices() != null) {
             RegisterServicesCenter.getRegisterServices().put(className, clazz);
         } else {
-            throw new RPCException("RPC服务未初始化");
+            throw new RpcException("RPC服务未初始化");
         }
     }
 

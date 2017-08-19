@@ -14,11 +14,13 @@ import java.net.UnknownHostException;
 import java.util.concurrent.*;
 
 /**
+ * 动态代理处理程序
  * created by yuyufeng on 2017/8/18.
  */
 public class ProxyHandler implements InvocationHandler {
-    private long timeout = 1000;
+    private long timeout = 1000; //超时等待时间
     private Class<?> service;
+    //远程调用地址
     private InetSocketAddress remoteAddress = new InetSocketAddress("127.0.0.1", 8989);
 
     public ProxyHandler(Class<?> service) {
@@ -26,6 +28,7 @@ public class ProxyHandler implements InvocationHandler {
     }
 
     public Object invoke(Object object, Method method, Object[] args) throws Throwable {
+        //准备传输的对象
         RpcContext rpcContext = new RpcContext();
         rpcContext.setServiceName(service.getName());
         rpcContext.setMethodName(method.getName());
@@ -37,6 +40,7 @@ public class ProxyHandler implements InvocationHandler {
     }
 
     private Object request(RpcContext rpcContext) throws ClassNotFoundException {
+        //使用线程池，主要是为了下面使用Future，异步得到结果，来做超时放弃处理
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Object result = null;
         Socket socket = null;
@@ -46,6 +50,7 @@ public class ProxyHandler implements InvocationHandler {
 
          Future future = executor.submit(new Callable() {
             public Object call() throws Exception {
+                //执行并返回远程调用结果
                 return request(rpcContext, socket, os, is);
             }
         });
@@ -64,6 +69,15 @@ public class ProxyHandler implements InvocationHandler {
         return result;
     }
 
+    /**
+     * 远程调用请求
+     * @param rpcContext
+     * @param socket
+     * @param os
+     * @param is
+     * @return
+     * @throws ClassNotFoundException
+     */
     private Object request(RpcContext rpcContext, Socket socket, ObjectOutputStream os, ObjectInputStream is) throws ClassNotFoundException {
         Object result = null;
         try {
