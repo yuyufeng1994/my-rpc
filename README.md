@@ -11,7 +11,7 @@
 ####  rpc-consumer
 >这个模块是rpc的消费层 
 
-关系
+依赖关系
 ---
 >rpc-consumer、rpc-provider为rpc使用方，所以他们两个都依赖 rpc-core 模块。
 因为提供层要为消费层暴露接口，所以提取了公共接口，因此，它们两个都依赖rpc-service

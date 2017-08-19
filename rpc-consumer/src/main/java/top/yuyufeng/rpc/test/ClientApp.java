@@ -11,14 +11,18 @@ public class ClientApp {
         HelloService helloService = RemoteServiceImpl.newRemoteProxyObject(HelloService.class);
         String result = helloService.sayHello("yyf");
         System.out.println(result);
+        //启动10个线程去请求
         for (int i = 0; i < 10; i++) {
             new Thread(){
                 @Override
                 public void run() {
-                    String result = helloService.sayHello("yyf");
-                    System.out.println(result);
+                    for (int j = 0; j < 10; j++) {
+                        String result = helloService.sayHello("yyf");
+                        System.out.println(result);
+                    }
                 }
             }.start();
+
         }
 
     }
