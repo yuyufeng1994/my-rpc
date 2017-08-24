@@ -45,5 +45,5 @@
 
 更新日志
 ----
->2017年8月24日 使用zookeeper来作协调服务注册与发现,使用Protostuff序列化(取代jdk序列化)
+>2017年8月24日 使用*zookeeper*来作协调服务注册与发现,使用*Protostuff*序列化(取代jdk序列化)
 之前初始版本已经建立分支[https://github.com/yyfyyf1994/my-rpc/tree/v1](https://github.com/yyfyyf1994/my-rpc/tree/v1)
