@@ -19,17 +19,19 @@ public class  ClientApp {
         MyResult myResult = calService.getResult(1,2);
         System.out.println(myResult);
         //启动10个线程去请求
-       /* for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             new Thread(){
                 @Override
                 public void run() {
                     for (int j = 0; j < 10; j++) {
                         String result = helloService.sayHello("yyf");
                         System.out.println(result);
+                        MyResult myResult = calService.getResult(1,2);
+                        System.out.println(myResult);
                     }
                 }
             }.start();
-        }*/
+        }
 
     }
 }

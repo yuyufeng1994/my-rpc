@@ -33,7 +33,7 @@ public class RpcRequestHandlerTask implements Runnable {
         ByteArrayOutputStream byteArrayOutputStream = null;
         try {
             //模拟作业时间
-//            long time = 100 * new Random().nextInt(10);
+            long time = 100 * new Random().nextInt(6);
             is = socket.getInputStream();
             byteArrayOutputStream = new ByteArrayOutputStream();
             byte[] b = new byte[1024];
@@ -43,8 +43,8 @@ public class RpcRequestHandlerTask implements Runnable {
             }
             RpcContext context = ProtostuffUtil.deserializer(byteArrayOutputStream.toByteArray(),RpcContext.class);
             byteArrayOutputStream.close();
-//            System.out.println("执行任务需要消耗：" + time + " " + context);
-//            Thread.sleep(time);
+            System.out.println("执行任务需要消耗：" + time + " " + context);
+            Thread.sleep(time);
             //从容易中得到已经注册的类
             Class clazz = RegisterServicesCenter.getService(context.getServiceName());
             if (clazz == null) {
