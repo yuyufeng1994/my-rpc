@@ -40,7 +40,7 @@
 
 启动调试*HelloWorld*
 --
->使用HelloService接口进行调试。首先启动提供层：在rpc-provider模块中运行top.yuyufeng.rpc.ServerApp.Main
+>使用HelloService接口进行调试。首先运行zookeeper服务，默认本地ip。接着启动提供层：在rpc-provider模块中运行top.yuyufeng.rpc.ServerApp.Main
 然后启动消费层：在rpc-consumer模块中运行top.yuyufeng.rpc.test.ClientApp.Main
 
 更新日志
