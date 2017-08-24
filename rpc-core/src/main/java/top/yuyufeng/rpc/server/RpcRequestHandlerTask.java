@@ -40,7 +40,7 @@ public class RpcRequestHandlerTask implements Runnable {
             System.out.println("执行任务需要消耗：" + time + " " + context);
             Thread.sleep(time);
             //从容易中得到已经注册的类
-            Class clazz = RegisterServicesCenter.getRegisterServices().get(context.getServiceName());
+            Class clazz = RegisterServicesCenter.getService(context.getServiceName());
             if (clazz == null) {
                 throw new RpcException("没有找到类 " + context.getServiceName());
             }

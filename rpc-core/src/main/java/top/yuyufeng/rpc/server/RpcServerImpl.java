@@ -22,9 +22,10 @@ public class RpcServerImpl implements RpcServer {
     }
 
 
-    public RpcServerImpl(int port, int nThreads) {
+    public RpcServerImpl(int port, int nThreads, String zookeeperHost) {
         this.port = port;
         this.nThreads = nThreads;
+        RegisterServicesCenter.init(zookeeperHost,port);
         init();
     }
 
@@ -64,11 +65,7 @@ public class RpcServerImpl implements RpcServer {
 
     @Override
     public void register(String className, Class clazz) throws Exception {
-        if (RegisterServicesCenter.getRegisterServices() != null) {
-            RegisterServicesCenter.getRegisterServices().put(className, clazz);
-        } else {
-            throw new RpcException("RPC服务未初始化");
-        }
+        RegisterServicesCenter.addServices(className, clazz);
     }
 
     @Override
