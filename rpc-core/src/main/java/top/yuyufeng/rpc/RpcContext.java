@@ -7,18 +7,19 @@ import java.util.Arrays;
 /**
  * created by yuyufeng on 2017/8/19.
  */
-public class RpcContext implements Serializable{
+public class RpcContext{
     private String serviceName;
 
     private String methodName;
 
     private Class<?>[] parameterTypes;
+    private Class<?> returnType;
 
     private Object[] arguments;
 
-    private InetSocketAddress localAddress;
+    private String localAddress;
 
-    private InetSocketAddress remoteAddress;
+    private String remoteAddress;
     private long timeout = 10000; //超时 默认10秒
 
     public long getTimeout() {
@@ -61,32 +62,27 @@ public class RpcContext implements Serializable{
         this.arguments = arguments;
     }
 
-    public InetSocketAddress getLocalAddress() {
+    public String getLocalAddress() {
         return localAddress;
     }
 
-    public void setLocalAddress(InetSocketAddress localAddress) {
+    public void setLocalAddress(String localAddress) {
         this.localAddress = localAddress;
     }
 
-    public InetSocketAddress getRemoteAddress() {
+    public String getRemoteAddress() {
         return remoteAddress;
     }
 
-    public void setRemoteAddress(InetSocketAddress remoteAddress) {
+    public void setRemoteAddress(String remoteAddress) {
         this.remoteAddress = remoteAddress;
     }
 
-    @Override
-    public String toString() {
-        return "RpcContext{" +
-                "serviceName='" + serviceName + '\'' +
-                ", methodName='" + methodName + '\'' +
-                ", parameterTypes=" + Arrays.toString(parameterTypes) +
-                ", arguments=" + Arrays.toString(arguments) +
-                ", localAddress=" + localAddress +
-                ", remoteAddress=" + remoteAddress +
-                ", timeout=" + timeout +
-                '}';
+    public Class<?> getReturnType() {
+        return returnType;
+    }
+
+    public void setReturnType(Class<?> returnType) {
+        this.returnType = returnType;
     }
 }

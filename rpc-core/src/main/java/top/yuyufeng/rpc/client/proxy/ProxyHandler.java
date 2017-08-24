@@ -4,10 +4,9 @@ package top.yuyufeng.rpc.client.proxy;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 import top.yuyufeng.rpc.RpcContext;
+import top.yuyufeng.rpc.utils.ProtostuffUtil;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
@@ -25,7 +24,7 @@ public class ProxyHandler implements InvocationHandler {
     //远程调用地址
     private InetSocketAddress remoteAddress = new InetSocketAddress("127.0.0.1", 8989);
     private static final int TIME_OUT = 10000;
-    private static final String ZOOKEEPER_HOST = "localhost:2181"; //zookeeper地址
+    private static String ZOOKEEPER_HOST = "localhost:2181"; //zookeeper地址
 
     public ProxyHandler(Class<?> service) {
         this.service = service;
@@ -36,10 +35,10 @@ public class ProxyHandler implements InvocationHandler {
         RpcContext rpcContext = new RpcContext();
         rpcContext.setServiceName(service.getName());
         rpcContext.setMethodName(method.getName());
-        rpcContext.setRemoteAddress(remoteAddress);
+        rpcContext.setRemoteAddress(remoteAddress.getAddress() + ":" + remoteAddress.getPort());
         rpcContext.setArguments(args);
         rpcContext.setParameterTypes(method.getParameterTypes());
-
+        rpcContext.setReturnType(method.getReturnType());
         return this.request(rpcContext);
     }
 
@@ -54,8 +53,8 @@ public class ProxyHandler implements InvocationHandler {
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Object result = null;
         Socket socket = null;
-        ObjectOutputStream os = null;
-        ObjectInputStream is = null;
+        OutputStream os = null;
+        InputStream is = null;
 
 
         Future future = executor.submit(new Callable() {
@@ -94,7 +93,7 @@ public class ProxyHandler implements InvocationHandler {
             }
             String resIp = new String(res);
             remoteAddress = new InetSocketAddress(resIp.split(":")[0], Integer.valueOf(resIp.split(":")[1]));
-            System.out.println("发现服务" + remoteAddress.getAddress());
+            System.out.println("发现服务 " + serviceName + " " + remoteAddress.getAddress());
             return true;
         } catch (KeeperException e) {
             System.err.println("服务没有发现...");
@@ -120,28 +119,51 @@ public class ProxyHandler implements InvocationHandler {
      * @return
      * @throws ClassNotFoundException
      */
-    private Object request(RpcContext rpcContext, Socket socket, ObjectOutputStream os, ObjectInputStream is) throws ClassNotFoundException {
+    private Object request(RpcContext rpcContext, Socket socket, OutputStream os, InputStream is) throws ClassNotFoundException {
         Object result = null;
+        ByteArrayOutputStream byteArrayOutputStream = null;
         try {
             socket = new Socket(remoteAddress.getAddress(), remoteAddress.getPort());
-            os = new ObjectOutputStream(socket.getOutputStream());
+            /*os = new ObjectOutputStream(socket.getOutputStream());
             os.writeObject(rpcContext);
 //             shutdownOutput():执行此方法，显示的告诉服务端发送完毕
             socket.shutdownOutput();
             //阻塞等待服务器响应
             is = new ObjectInputStream(socket.getInputStream());
-            result = is.readObject();
+            result = is.readObject();*/
+            os = socket.getOutputStream();
+            byte[] bytes = ProtostuffUtil.serializer(rpcContext);
+            os.write(bytes);
+            socket.shutdownOutput();
+            is = socket.getInputStream();
+
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int len;
+            while ((len = is.read(b)) != -1) {
+                byteArrayOutputStream.write(b, 0, len);
+            }
+            result = ProtostuffUtil.deserializer(byteArrayOutputStream.toByteArray(), rpcContext.getReturnType());
+
+
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            if (byteArrayOutputStream != null) {
+                try {
+                    byteArrayOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             release(socket, os, is);
         }
         return result;
     }
 
-    private void release(Socket socket, ObjectOutputStream os, ObjectInputStream is) {
+    private void release(Socket socket, OutputStream os, InputStream is) {
         if (is != null) {
             try {
                 is.close();

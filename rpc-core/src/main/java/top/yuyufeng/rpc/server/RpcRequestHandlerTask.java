@@ -3,10 +3,9 @@ package top.yuyufeng.rpc.server;
 
 import top.yuyufeng.rpc.RpcContext;
 import top.yuyufeng.rpc.exception.RpcException;
+import top.yuyufeng.rpc.utils.ProtostuffUtil;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.net.Socket;
 import java.util.Random;
@@ -29,16 +28,23 @@ public class RpcRequestHandlerTask implements Runnable {
 
     private void acceptAndResponce() {
         //这里使用ObjectOutputStream ObjectInputStream，直接通过对象传输，所以传输的对象必须实现了序列化接口，序列化这块可以优化
-        ObjectOutputStream os = null;
-        ObjectInputStream is = null;
+        OutputStream os = null;
+        InputStream is = null;
+        ByteArrayOutputStream byteArrayOutputStream = null;
         try {
             //模拟作业时间
-            long time = 100 * new Random().nextInt(10);
-            is = new ObjectInputStream(socket.getInputStream());
-            //读取第一部分数据
-            RpcContext context = (RpcContext) is.readObject();
-            System.out.println("执行任务需要消耗：" + time + " " + context);
-            Thread.sleep(time);
+//            long time = 100 * new Random().nextInt(10);
+            is = socket.getInputStream();
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int len;
+            while ((len = is.read(b)) != -1) {
+                byteArrayOutputStream.write(b,0,len);
+            }
+            RpcContext context = ProtostuffUtil.deserializer(byteArrayOutputStream.toByteArray(),RpcContext.class);
+            byteArrayOutputStream.close();
+//            System.out.println("执行任务需要消耗：" + time + " " + context);
+//            Thread.sleep(time);
             //从容易中得到已经注册的类
             Class clazz = RegisterServicesCenter.getService(context.getServiceName());
             if (clazz == null) {
@@ -50,12 +56,19 @@ public class RpcRequestHandlerTask implements Runnable {
             }
             //执行真正要调用的方法。对于实例都不是单利模式的，每次都clazz.newInstance()，有待改进
             Object result = method.invoke(clazz.newInstance(), context.getArguments());
-            os = new ObjectOutputStream(socket.getOutputStream());
+            os = socket.getOutputStream();
             //返回执行结果给客户端
-            os.writeObject(result);
+            os.write(ProtostuffUtil.serializer(result));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if(byteArrayOutputStream!=null){
+                try {
+                    byteArrayOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             if (os != null) {
                 try {
                     os.close();

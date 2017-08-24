@@ -22,7 +22,7 @@ public class RegisterServicesCenter {
         RegisterServicesCenter.zookeeperHost = zookeeperHost;
         try {
             zookeeper = new ZooKeeper(zookeeperHost, TIME_OUT, null);
-            localIp = InetAddress.getLocalHost().getHostAddress() + ":" + localPort;
+            localIp = InetAddress.getLocalHost().getHostAddress() + ":" + localPort; //提供层的ip,这里存放本机的ip
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,6 +34,7 @@ public class RegisterServicesCenter {
     public static void addServices(String className, Class clazz) throws InterruptedException {
         registerServices.put(className, clazz);
         //存入zookeeper节点
+        //后期优化增强:一个服务可配置多个ip,这样就可以有多个提供层提供服务,在客户端使用负载均衡策略即可
         try {
             if (zookeeper.exists("/myrpc", false) == null) {
                 zookeeper.create("/myrpc", "true".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
