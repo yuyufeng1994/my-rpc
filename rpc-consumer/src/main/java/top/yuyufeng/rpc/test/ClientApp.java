@@ -15,12 +15,12 @@ public class ClientApp {
         String result = helloService.sayHello("yyf");
         System.out.println(result);
 
-     /*   CalService calService = RemoteServiceImpl.newRemoteProxyObject(CalService.class);
+        CalService calService = RemoteServiceImpl.newRemoteProxyObject(CalService.class);
         MyResult myResult = calService.getResult(1, 2);
         System.out.println(myResult);
 
         myResult = calService.getResult(3, 2);
-        System.out.println(myResult);*/
+        System.out.println(myResult);
 
         //启动10个线程去请求
         /*for (int i = 0; i < 10; i++) {

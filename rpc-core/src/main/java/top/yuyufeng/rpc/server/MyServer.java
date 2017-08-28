@@ -20,16 +20,18 @@ import java.net.InetSocketAddress;
  */
 public class MyServer {
     private int port;
+    private EventLoopGroup bossGroup;
+    private EventLoopGroup workerGroup;
 
     public MyServer(int port) {
         this.port = port;
     }
 
-    public void start(){
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+    public void start() {
+         bossGroup = new NioEventLoopGroup(5);
+         workerGroup = new NioEventLoopGroup();
         try {
-            ServerBootstrap sbs = new ServerBootstrap().group(bossGroup,workerGroup).channel(NioServerSocketChannel.class).localAddress(new InetSocketAddress(port))
+            ServerBootstrap sbs = new ServerBootstrap().group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).localAddress(new InetSocketAddress(port))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
 
                         protected void initChannel(SocketChannel ch) throws Exception {
@@ -37,19 +39,26 @@ public class MyServer {
                             ch.pipeline().addLast(new MyDecoder(RpcRequest.class));
                             ch.pipeline().addLast(new MyEncoder(RpcResponse.class));
                             ch.pipeline().addLast(new MyServerHandler());
-                        };
+                        }
+
+                        ;
 
                     }).option(ChannelOption.SO_BACKLOG, 128)
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             // 绑定端口，开始接收进来的连接
             ChannelFuture future = sbs.bind(port).sync();
 
-            System.out.println("RPC启动成功 " + port );
+            System.out.println("RPC启动成功 " + port);
             future.channel().closeFuture().sync();
         } catch (Exception e) {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
+    }
+
+    public void shutdown(){
+        bossGroup.shutdownGracefully();
+        workerGroup.shutdownGracefully();
     }
 
     public static void main(String[] args) throws Exception {
