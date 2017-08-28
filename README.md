@@ -46,13 +46,20 @@
 缺陷
 --
 >* netty通信过程中异常的解决\丢失有待完善
->* 服务的负载均衡有待增加
+>* 负载均衡有待增加
 >* 客户端可以优化一个客户端减少扫描发现服务的次数（可在客户端启动时先扫描完毕）
->* ...
+>* ...(*细节懒得去实现啦*)
+
+版本说明
+--
+* [now（主干)](https://github.com/yyfyyf1994/my-rpc/)  项目随着主干进行下去（使用Netty4来操作NIO通信，不再是原来的多线程BIO。改变了通信方式，结构变化较大）
+* [v2](https://github.com/yyfyyf1994/my-rpc/tree/v2)  增加zookeeper注册发现，客户端服务端无需互相知道对方。增加Protostuff序列化（序列化效率比jdk的好）。
+* [v1](https://github.com/yyfyyf1994/my-rpc/tree/v1)  原始版本（bio多线程通信 客户端服务端直连）
+
 
 更新日志
 ----
->* 2017年8月24日 使用*zookeeper*来作协调服务注册与发现,使用*Protostuff*序列化(取代jdk序列化)  
-之前初始版本已经建立分支[https://github.com/yyfyyf1994/my-rpc/tree/v1](https://github.com/yyfyyf1994/my-rpc/tree/v1)  
 >* 2017年8月28日 将原来的BIO通信改成了NIO，加入*Netty4*进行通信 
 之前初始版本已经建立分支[https://github.com/yyfyyf1994/my-rpc/tree/v2](https://github.com/yyfyyf1994/my-rpc/tree/v2)  
+>* 2017年8月24日 使用*zookeeper*来作协调服务注册与发现,使用*Protostuff*序列化(取代jdk序列化)  
+之前初始版本已经建立分支[https://github.com/yyfyyf1994/my-rpc/tree/v1](https://github.com/yyfyyf1994/my-rpc/tree/v1)  
