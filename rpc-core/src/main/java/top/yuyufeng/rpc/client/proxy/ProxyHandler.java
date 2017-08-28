@@ -3,7 +3,8 @@ package top.yuyufeng.rpc.client.proxy;
 
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
-import top.yuyufeng.rpc.RpcContext;
+import top.yuyufeng.rpc.RpcRequest;
+import top.yuyufeng.rpc.RpcResponse;
 import top.yuyufeng.rpc.utils.ProtostuffUtil;
 
 import java.io.*;
@@ -32,19 +33,19 @@ public class ProxyHandler implements InvocationHandler {
 
     public Object invoke(Object object, Method method, Object[] args) throws Throwable {
         //准备传输的对象
-        RpcContext rpcContext = new RpcContext();
-        rpcContext.setServiceName(service.getName());
-        rpcContext.setMethodName(method.getName());
-        rpcContext.setRemoteAddress(remoteAddress.getAddress() + ":" + remoteAddress.getPort());
-        rpcContext.setArguments(args);
-        rpcContext.setParameterTypes(method.getParameterTypes());
-        rpcContext.setReturnType(method.getReturnType());
-        return this.request(rpcContext);
+        RpcRequest rpcRequest = new RpcRequest();
+        rpcRequest.setServiceName(service.getName());
+        rpcRequest.setMethodName(method.getName());
+        rpcRequest.setRemoteAddress(remoteAddress.getAddress() + ":" + remoteAddress.getPort());
+        rpcRequest.setArguments(args);
+        rpcRequest.setParameterTypes(method.getParameterTypes());
+        rpcRequest.setReturnType(method.getReturnType());
+        return this.request(rpcRequest);
     }
 
-    private Object request(RpcContext rpcContext) throws ClassNotFoundException {
+    private Object request(RpcRequest rpcRequest) throws ClassNotFoundException {
         //去zookeeper发现服务
-        boolean isDiscover = discoverServices(rpcContext.getServiceName(), remoteAddress);
+        boolean isDiscover = discoverServices(rpcRequest.getServiceName(), remoteAddress);
         if (!isDiscover) {
             return null;
         }
@@ -60,7 +61,7 @@ public class ProxyHandler implements InvocationHandler {
         Future future = executor.submit(new Callable() {
             public Object call() throws Exception {
                 //执行并返回远程调用结果
-                return request(rpcContext, socket, os, is);
+                return request(rpcRequest, socket, os, is);
             }
         });
 
@@ -112,27 +113,27 @@ public class ProxyHandler implements InvocationHandler {
     /**
      * 远程调用请求
      *
-     * @param rpcContext
+     * @param rpcRequest
      * @param socket
      * @param os
      * @param is
      * @return
      * @throws ClassNotFoundException
      */
-    private Object request(RpcContext rpcContext, Socket socket, OutputStream os, InputStream is) throws ClassNotFoundException {
+    private Object request(RpcRequest rpcRequest, Socket socket, OutputStream os, InputStream is) throws ClassNotFoundException {
         Object result = null;
         ByteArrayOutputStream byteArrayOutputStream = null;
         try {
             socket = new Socket(remoteAddress.getAddress(), remoteAddress.getPort());
             /*os = new ObjectOutputStream(socket.getOutputStream());
-            os.writeObject(rpcContext);
+            os.writeObject(rpcRequest);
 //             shutdownOutput():执行此方法，显示的告诉服务端发送完毕
             socket.shutdownOutput();
             //阻塞等待服务器响应
             is = new ObjectInputStream(socket.getInputStream());
             result = is.readObject();*/
             os = socket.getOutputStream();
-            byte[] bytes = ProtostuffUtil.serializer(rpcContext);
+            byte[] bytes = ProtostuffUtil.serializer(rpcRequest);
             os.write(bytes);
             socket.shutdownOutput();
             is = socket.getInputStream();
@@ -143,7 +144,9 @@ public class ProxyHandler implements InvocationHandler {
             while ((len = is.read(b)) != -1) {
                 byteArrayOutputStream.write(b, 0, len);
             }
-            result = ProtostuffUtil.deserializer(byteArrayOutputStream.toByteArray(), rpcContext.getReturnType());
+
+            RpcResponse rpcResponse = ProtostuffUtil.deserializer(byteArrayOutputStream.toByteArray(),RpcResponse.class);
+            result =  rpcResponse.getResult();
 
 
         } catch (UnknownHostException e) {

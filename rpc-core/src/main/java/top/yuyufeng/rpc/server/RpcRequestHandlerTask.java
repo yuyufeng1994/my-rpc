@@ -1,7 +1,8 @@
 package top.yuyufeng.rpc.server;
 
 
-import top.yuyufeng.rpc.RpcContext;
+import top.yuyufeng.rpc.RpcRequest;
+import top.yuyufeng.rpc.RpcResponse;
 import top.yuyufeng.rpc.exception.RpcException;
 import top.yuyufeng.rpc.utils.ProtostuffUtil;
 
@@ -41,24 +42,25 @@ public class RpcRequestHandlerTask implements Runnable {
             while ((len = is.read(b)) != -1) {
                 byteArrayOutputStream.write(b,0,len);
             }
-            RpcContext context = ProtostuffUtil.deserializer(byteArrayOutputStream.toByteArray(),RpcContext.class);
+            RpcRequest rpcRequest = ProtostuffUtil.deserializer(byteArrayOutputStream.toByteArray(),RpcRequest.class);
             byteArrayOutputStream.close();
-            System.out.println("执行任务需要消耗：" + time + " " + context);
+            System.out.println("执行任务需要消耗：" + time + " " + rpcRequest);
             Thread.sleep(time);
             //从容易中得到已经注册的类
-            Class clazz = RegisterServicesCenter.getService(context.getServiceName());
+            Class clazz = RegisterServicesCenter.getService(rpcRequest.getServiceName());
             if (clazz == null) {
-                throw new RpcException("没有找到类 " + context.getServiceName());
+                throw new RpcException("没有找到类 " + rpcRequest.getServiceName());
             }
-            Method method = clazz.getMethod(context.getMethodName(), context.getParameterTypes());
+            Method method = clazz.getMethod(rpcRequest.getMethodName(), rpcRequest.getParameterTypes());
             if (method == null) {
-                throw new RpcException("没有找到相应方法 " + context.getMethodName());
+                throw new RpcException("没有找到相应方法 " + rpcRequest.getMethodName());
             }
             //执行真正要调用的方法。对于实例都不是单利模式的，每次都clazz.newInstance()，有待改进
-            Object result = method.invoke(clazz.newInstance(), context.getArguments());
+            Object result = method.invoke(clazz.newInstance(), rpcRequest.getArguments());
             os = socket.getOutputStream();
             //返回执行结果给客户端
-            os.write(ProtostuffUtil.serializer(result));
+            RpcResponse rpcResponse = new RpcResponse(result);
+            os.write(ProtostuffUtil.serializer(rpcResponse));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

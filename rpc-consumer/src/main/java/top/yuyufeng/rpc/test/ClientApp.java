@@ -8,7 +8,7 @@ import top.yuyufeng.rpc.service.top.yuyufeng.dto.MyResult;
 /**
  * created by yuyufeng on 2017/8/19.
  */
-public class  ClientApp {
+public class ClientApp {
     public static void main(String[] args) {
         //获取动态代理的HelloService的“真实对象（其实内部不是真实的，被换成了调用远程方法）”
         HelloService helloService = RemoteServiceImpl.newRemoteProxyObject(HelloService.class);
@@ -16,10 +16,19 @@ public class  ClientApp {
         System.out.println(result);
 
         CalService calService = RemoteServiceImpl.newRemoteProxyObject(CalService.class);
-        MyResult myResult = calService.getResult(1,2);
+        MyResult myResult = calService.getResult(1, 2);
+        System.out.println(myResult);
+
+        myResult = calService.getResult(1, 2);
+        System.out.println(myResult);
+        myResult = calService.getResult(1, 2);
+        System.out.println(myResult);
+        myResult = calService.getResult(1, 2);
+        System.out.println(myResult);
+        myResult = calService.getResult(1, 2);
         System.out.println(myResult);
         //启动10个线程去请求
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             new Thread(){
                 @Override
                 public void run() {
@@ -31,7 +40,7 @@ public class  ClientApp {
                     }
                 }
             }.start();
-        }
+        }*/
 
     }
 }

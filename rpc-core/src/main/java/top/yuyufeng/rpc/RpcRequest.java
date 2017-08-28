@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * created by yuyufeng on 2017/8/19.
  */
-public class RpcContext{
+public class RpcRequest{
     private String serviceName;
 
     private String methodName;
