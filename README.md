@@ -52,7 +52,7 @@
 
 版本说明
 --
-* [now（主干)](https://github.com/yyfyyf1994/my-rpc/)  项目随着主干进行下去（使用Netty4来操作NIO通信，不再是原来的多线程BIO。改变了通信方式，结构变化较大）
+* [master](https://github.com/yyfyyf1994/my-rpc/)  项目随着主干进行下去（使用Netty4来操作NIO通信，不再是原来的多线程BIO。改变了通信方式，结构变化较大）
 * [v2](https://github.com/yyfyyf1994/my-rpc/tree/v2)  增加zookeeper注册发现，客户端服务端无需互相知道对方。增加Protostuff序列化（序列化效率比jdk的好）。
 * [v1](https://github.com/yyfyyf1994/my-rpc/tree/v1)  原始版本（bio多线程通信 客户端服务端直连）
 
