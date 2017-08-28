@@ -46,6 +46,6 @@
 更新日志
 ----
 >2017年8月24日 使用*zookeeper*来作协调服务注册与发现,使用*Protostuff*序列化(取代jdk序列化)
-之前初始版本已经建立分支[https://github.com/yyfyyf1994/my-rpc/tree/v1](https://github.com/yyfyyf1994/my-rpc/tree/v1)
+之前初始版本已经建立分支[https://github.com/yyfyyf1994/my-rpc/tree/v1](https://github.com/yyfyyf1994/my-rpc/tree/v1)  
 >2017年8月28日 将原来的BIO通信改成了NIO，加入Netty4进行通信 
 之前初始版本已经建立分支[https://github.com/yyfyyf1994/my-rpc/tree/v2](https://github.com/yyfyyf1994/my-rpc/tree/v2)
