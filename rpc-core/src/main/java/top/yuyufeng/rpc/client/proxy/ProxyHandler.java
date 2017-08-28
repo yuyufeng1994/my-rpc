@@ -51,35 +51,8 @@ public class ProxyHandler implements InvocationHandler {
             return null;
         }
         Object result = null;
-        result = MyNettyClient.send(rpcRequest,remoteAddress);
-
-       /* //使用线程池，主要是为了下面使用Future，异步得到结果，来做超时放弃处理
-        ExecutorService executor = Executors.newFixedThreadPool(1);
-
-        Socket socket = null;
-        OutputStream os = null;
-        InputStream is = null;
-
-
-        Future future = executor.submit(new Callable() {
-            public Object call() throws Exception {
-                //执行并返回远程调用结果
-                return request(rpcRequest, socket, os, is);
-            }
-        });
-
-        try {
-            result = future.get(timeout, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (TimeoutException e) {
-            System.out.println("请求响应超时放弃..");
-            release(socket, os, is);
-            future.cancel(true);
-        }
-        executor.shutdown();*/
+        RpcResponse rpcResponse = (RpcResponse) MyNettyClient.send(rpcRequest,remoteAddress);
+        result = rpcResponse.getResult();
         return result;
     }
 
