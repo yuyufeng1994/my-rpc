@@ -25,7 +25,7 @@ public class RpcServerImpl implements RpcServer {
     public RpcServerImpl(int port, int nThreads, String zookeeperHost) {
         this.port = port;
         this.nThreads = nThreads;
-        RegisterServicesCenter.init(zookeeperHost,port);
+        RegisterServicesCenter.init(zookeeperHost, port);
         init();
     }
 
@@ -36,8 +36,7 @@ public class RpcServerImpl implements RpcServer {
     @Override
     public void start() {
         isAlive = true;
-        ServerSocket serverSocket = null;
-       new MyServer(port).start();
+        new MyServer(port).start();
     }
 
     @Override

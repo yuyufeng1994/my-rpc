@@ -19,8 +19,7 @@ import java.net.InetSocketAddress;
 public class MyNettyClient {
 
     public static Object send(RpcRequest rpcRequest,InetSocketAddress inetSocketAddress){
-        Object monitor = new Object();//监听对象
-        MyClientHandler myClientHandler = new MyClientHandler(monitor);
+        MyClientHandler myClientHandler = new MyClientHandler();
         // Configure the client.
         EventLoopGroup group = new NioEventLoopGroup();
         try {
@@ -40,9 +39,7 @@ public class MyNettyClient {
 
             ChannelFuture future = b.connect(inetSocketAddress.getAddress(), inetSocketAddress.getPort()).sync();
             future.channel().writeAndFlush(rpcRequest);
-            synchronized (monitor) {
-                monitor.wait(); // 未收到响应，使线程等待
-            }
+
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();

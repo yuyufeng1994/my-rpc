@@ -24,7 +24,7 @@ public class ProxyHandler implements InvocationHandler {
     private long timeout = 1000; //超时等待时间
     private Class<?> service;
     //远程调用地址
-    private InetSocketAddress remoteAddress = new InetSocketAddress("127.0.0.1", 8989);
+    private InetSocketAddress remoteAddress;
     private static final int TIME_OUT = 10000;
     private static String ZOOKEEPER_HOST = "localhost:2181"; //zookeeper地址
 
@@ -37,7 +37,6 @@ public class ProxyHandler implements InvocationHandler {
         RpcRequest rpcRequest = new RpcRequest();
         rpcRequest.setServiceName(service.getName());
         rpcRequest.setMethodName(method.getName());
-        rpcRequest.setRemoteAddress(remoteAddress.getAddress() + ":" + remoteAddress.getPort());
         rpcRequest.setArguments(args);
         rpcRequest.setParameterTypes(method.getParameterTypes());
         rpcRequest.setReturnType(method.getReturnType());
@@ -46,8 +45,8 @@ public class ProxyHandler implements InvocationHandler {
 
     private Object request(RpcRequest rpcRequest) throws ClassNotFoundException {
         //去zookeeper发现服务
-        boolean isDiscover = discoverServices(rpcRequest.getServiceName(), remoteAddress);
-        if (!isDiscover) {
+        remoteAddress = discoverServices(rpcRequest.getServiceName());
+        if (remoteAddress == null) {
             return null;
         }
         Object result = null;
@@ -56,7 +55,7 @@ public class ProxyHandler implements InvocationHandler {
         return result;
     }
 
-    private boolean discoverServices(String serviceName, InetSocketAddress remoteAddress) {
+    private InetSocketAddress discoverServices(String serviceName) {
         ZooKeeper zookeeper = null;
         try {
             zookeeper = new ZooKeeper(ZOOKEEPER_HOST, TIME_OUT, null);
@@ -69,9 +68,8 @@ public class ProxyHandler implements InvocationHandler {
                 System.err.println("服务没有发现...");
             }
             String resIp = new String(res);
-            remoteAddress = new InetSocketAddress(resIp.split(":")[0], Integer.valueOf(resIp.split(":")[1]));
-            System.out.println("发现服务 " + serviceName + " " + remoteAddress.getAddress());
-            return true;
+            System.out.println("发现服务 " + serviceName + " " + resIp);
+            return new InetSocketAddress(resIp.split(":")[0], Integer.valueOf(resIp.split(":")[1]));
         } catch (KeeperException e) {
             System.err.println("服务没有发现...");
         } catch (InterruptedException e) {
@@ -83,7 +81,7 @@ public class ProxyHandler implements InvocationHandler {
                 e.printStackTrace();
             }
         }
-        return false;
+        return null;
     }
 
     /**

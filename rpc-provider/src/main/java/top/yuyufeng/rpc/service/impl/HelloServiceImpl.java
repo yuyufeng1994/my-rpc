@@ -9,6 +9,11 @@ public class HelloServiceImpl implements HelloService {
     @Override
     public String sayHello(String words) {
         System.out.println("hello:" + words);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return "hello:" + words;
     }
 }
