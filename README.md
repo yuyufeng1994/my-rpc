@@ -43,6 +43,12 @@
 >使用HelloService接口进行调试。首先运行zookeeper服务，默认本地ip。接着启动提供层：在rpc-provider模块中运行top.yuyufeng.rpc.ServerApp.Main
 然后启动消费层：在rpc-consumer模块中运行top.yuyufeng.rpc.test.ClientApp.Main
 
+缺陷
+--
+>* netty通信过程中异常的解决\丢失有待完善
+>* 服务的负载均衡有待增加
+>* 客户端可以优化一个客户端减少扫描发现服务的次数（可在客户端启动时先扫描完毕）
+
 更新日志
 ----
 >* 2017年8月24日 使用*zookeeper*来作协调服务注册与发现,使用*Protostuff*序列化(取代jdk序列化)  
