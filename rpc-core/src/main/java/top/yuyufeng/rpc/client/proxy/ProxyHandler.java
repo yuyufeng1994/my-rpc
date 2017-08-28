@@ -5,6 +5,7 @@ import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 import top.yuyufeng.rpc.RpcRequest;
 import top.yuyufeng.rpc.RpcResponse;
+import top.yuyufeng.rpc.client.MyNettyClient;
 import top.yuyufeng.rpc.utils.ProtostuffUtil;
 
 import java.io.*;
@@ -49,10 +50,12 @@ public class ProxyHandler implements InvocationHandler {
         if (!isDiscover) {
             return null;
         }
-
-        //使用线程池，主要是为了下面使用Future，异步得到结果，来做超时放弃处理
-        ExecutorService executor = Executors.newFixedThreadPool(1);
         Object result = null;
+        result = MyNettyClient.send(rpcRequest,remoteAddress);
+
+       /* //使用线程池，主要是为了下面使用Future，异步得到结果，来做超时放弃处理
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+
         Socket socket = null;
         OutputStream os = null;
         InputStream is = null;
@@ -76,7 +79,7 @@ public class ProxyHandler implements InvocationHandler {
             release(socket, os, is);
             future.cancel(true);
         }
-        executor.shutdown();
+        executor.shutdown();*/
         return result;
     }
 

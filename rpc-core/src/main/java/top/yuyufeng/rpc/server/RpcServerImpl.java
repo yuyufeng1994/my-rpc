@@ -37,24 +37,7 @@ public class RpcServerImpl implements RpcServer {
     public void start() {
         isAlive = true;
         ServerSocket serverSocket = null;
-        try {
-            serverSocket = new ServerSocket(port);
-            System.out.println("Rpc服务启动成功...");
-            while (true) {
-                executor.execute(new RpcRequestHandlerTask(serverSocket.accept()));
-                System.out.println("执行一次响应.." + new Date());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (serverSocket != null) {
-                try {
-                    serverSocket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+       new MyServer(port).start();
     }
 
     @Override
