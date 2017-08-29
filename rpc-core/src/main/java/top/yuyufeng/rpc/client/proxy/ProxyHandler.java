@@ -14,6 +14,8 @@ import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.*;
 
 /**
@@ -27,6 +29,7 @@ public class ProxyHandler implements InvocationHandler {
     private InetSocketAddress remoteAddress;
     private static final int TIME_OUT = 10000;
     private static String ZOOKEEPER_HOST = "localhost:2181"; //zookeeper地址
+    private static Map<String, InetSocketAddress> sevices = new ConcurrentHashMap<>();
 
     public ProxyHandler(Class<?> service) {
         this.service = service;
@@ -56,6 +59,11 @@ public class ProxyHandler implements InvocationHandler {
     }
 
     private InetSocketAddress discoverServices(String serviceName) {
+        InetSocketAddress result = sevices.get(serviceName);
+        if(result != null){
+            return result;
+        }
+
         ZooKeeper zookeeper = null;
         try {
             zookeeper = new ZooKeeper(ZOOKEEPER_HOST, TIME_OUT, null);
@@ -69,7 +77,9 @@ public class ProxyHandler implements InvocationHandler {
             }
             String resIp = new String(res);
             System.out.println("发现服务 " + serviceName + " " + resIp);
-            return new InetSocketAddress(resIp.split(":")[0], Integer.valueOf(resIp.split(":")[1]));
+            result = new InetSocketAddress(resIp.split(":")[0], Integer.valueOf(resIp.split(":")[1]));
+            sevices.put(serviceName,result);
+            return result;
         } catch (KeeperException e) {
             System.err.println("服务没有发现...");
         } catch (InterruptedException e) {

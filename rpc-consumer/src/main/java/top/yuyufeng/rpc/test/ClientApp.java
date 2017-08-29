@@ -23,7 +23,7 @@ public class ClientApp {
         System.out.println(myResult);
 
         //启动10个线程去请求
-        /*for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             new Thread(){
                 @Override
                 public void run() {
@@ -35,7 +35,7 @@ public class ClientApp {
                     }
                 }
             }.start();
-        }*/
+        }
 
     }
 }
