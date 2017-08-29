@@ -15,7 +15,7 @@ public class RpcServerImpl implements RpcServer {
     private int nThreads = 10;
     private boolean isAlive = false;
     private int port = 8989;
-    private ExecutorService executor;
+    private MyServer myServer;
 
     public RpcServerImpl() {
         init();
@@ -25,25 +25,25 @@ public class RpcServerImpl implements RpcServer {
     public RpcServerImpl(int port, int nThreads, String zookeeperHost) {
         this.port = port;
         this.nThreads = nThreads;
-        RegisterServicesCenter.init(zookeeperHost,port);
+        RegisterServicesCenter.init(zookeeperHost, port);
         init();
     }
 
     public void init() {
-        executor = Executors.newFixedThreadPool(nThreads);
+
     }
 
     @Override
     public void start() {
         isAlive = true;
-        ServerSocket serverSocket = null;
-       new MyServer(port).start();
+        myServer =  new MyServer(port);
+        myServer.start();
     }
 
     @Override
     public void stop() {
         isAlive = false;
-        executor.shutdown();
+        myServer.shutdown();
     }
 
     @Override

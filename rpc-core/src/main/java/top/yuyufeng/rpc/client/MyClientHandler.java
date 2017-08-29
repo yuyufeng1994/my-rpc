@@ -7,13 +7,10 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * Created by yuyufeng on 2017/8/28.
  */
 public class MyClientHandler extends ChannelInboundHandlerAdapter {
-    private Object monitor;
 
     private Object result;
 
-    public MyClientHandler(Object monitor) {
-        this.monitor = monitor;
-    }
+
 
     public Object getResult() {
         return result;
@@ -31,9 +28,6 @@ public class MyClientHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         System.out.println("read Message:"+msg);
         result = msg;
-        synchronized (monitor) {
-            monitor.notifyAll(); // 收到响应，唤醒线程
-        }
     }
 
     @Override

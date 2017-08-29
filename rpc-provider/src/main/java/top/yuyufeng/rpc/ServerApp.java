@@ -13,7 +13,7 @@ import top.yuyufeng.rpc.service.impl.HelloServiceImpl;
  */
 public class ServerApp {
     public static void main(String[] args) throws Exception {
-        RpcServer rpcServer = new RpcServerImpl(8989,5,"127.0.0.1:2181");
+        RpcServer rpcServer = new RpcServerImpl(7878,5,"127.0.0.1:2181");
         //暴露HelloService接口，具体实现为HelloServiceImpl
         rpcServer.register(HelloService.class.getName(),HelloServiceImpl.class);
         rpcServer.register(CalService.class.getName(),CalServiceImpl.class);
