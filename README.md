@@ -45,15 +45,15 @@
 
 缺陷
 --
->* netty通信过程中异常的解决\丢失有待完善(netty应用的还不好)
+>* netty通信过程中异常的解决\丢失有待完善(netty的应用优待改进)
 >* 负载均衡有待增加
->* ...(*细节懒得去实现啦*)
+>* ...(*细节有待实现*)
 
 版本说明
 --
  > 项目随着主干进行下去
 * [master](https://github.com/yyfyyf1994/my-rpc/) 在上个版本基础上，使用Netty4来操作NIO通信，不再是原来的多线程BIO。改变了通信方式，结构变化较大
-* [v2](https://github.com/yyfyyf1994/my-rpc/tree/v2)  在上个版本基础上，增加zookeeper注册发现，客户端服务端无需互相知道对方。增加Protostuff序列化（序列化效率高）。
+* [v2](https://github.com/yyfyyf1994/my-rpc/tree/v2)  在上个版本基础上，增加zookeeper注册发现，客户端服务端无需互相知道对方。增加Protostuff序列化（序列化效率高）
 * [v1](https://github.com/yyfyyf1994/my-rpc/tree/v1)  原始版本（bio多线程通信 客户端服务端直连）
 
 

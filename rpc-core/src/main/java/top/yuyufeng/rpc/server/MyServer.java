@@ -20,15 +20,17 @@ import java.net.InetSocketAddress;
  */
 public class MyServer {
     private int port;
+    private int threadSize = 5;
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
 
-    public MyServer(int port) {
+    public MyServer(int port,int threadSize) {
         this.port = port;
+        this.threadSize = threadSize;
     }
 
     public void start() {
-         bossGroup = new NioEventLoopGroup(5);
+         bossGroup = new NioEventLoopGroup(threadSize);
          workerGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap sbs = new ServerBootstrap().group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).localAddress(new InetSocketAddress(port))
@@ -47,8 +49,7 @@ public class MyServer {
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             // 绑定端口，开始接收进来的连接
             ChannelFuture future = sbs.bind(port).sync();
-
-            System.out.println("RPC启动成功 " + port);
+            System.out.println("Rpc服务启动成功 " + port);
             future.channel().closeFuture().sync();
         } catch (Exception e) {
             bossGroup.shutdownGracefully();
@@ -68,6 +69,6 @@ public class MyServer {
         } else {
             port = 8080;
         }
-        new MyServer(port).start();
+        new MyServer(port,5).start();
     }
 }
