@@ -35,6 +35,7 @@ public class ProxyHandler implements InvocationHandler {
         this.service = service;
     }
 
+    @Override
     public Object invoke(Object object, Method method, Object[] args) throws Throwable {
         //准备传输的对象
         RpcRequest rpcRequest = new RpcRequest();
