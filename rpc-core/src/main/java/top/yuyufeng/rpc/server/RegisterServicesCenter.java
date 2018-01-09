@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.concurrent.ConcurrentHashMap;
 
+
 /**
- * created by yuyufeng on 2017/8/19.
+ * 服务注册中心
+ * @author yuyufeng
  */
 public class RegisterServicesCenter {
     private static String zookeeperHost;
@@ -22,15 +24,25 @@ public class RegisterServicesCenter {
         RegisterServicesCenter.zookeeperHost = zookeeperHost;
         try {
             zookeeper = new ZooKeeper(zookeeperHost, TIME_OUT, null);
-            localIp = InetAddress.getLocalHost().getHostAddress() + ":" + localPort; //提供层的ip,这里存放本机的ip
+
+            //提供层的ip,这里存放本机的ip
+            localIp = InetAddress.getLocalHost().getHostAddress() + ":" + localPort;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    //暴露接口的实现类存放容器
+    /**
+     * 暴露接口的实现类存放容器
+     */
     private static ConcurrentHashMap<String, Class> registerServices = new ConcurrentHashMap<>();
 
+    /**
+     * 增加服务
+     * @param className
+     * @param clazz
+     * @throws InterruptedException
+     */
     public static void addServices(String className, Class clazz) throws InterruptedException {
         registerServices.put(className, clazz);
         //存入zookeeper节点
@@ -51,6 +63,11 @@ public class RegisterServicesCenter {
         }
     }
 
+    /**
+     * 根据类名获取服务
+     * @param className
+     * @return
+     */
     public static Class getService(String className) {
         return registerServices.get(className);
     }

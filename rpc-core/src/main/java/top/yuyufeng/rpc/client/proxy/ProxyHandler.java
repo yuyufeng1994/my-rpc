@@ -20,7 +20,8 @@ import java.util.concurrent.*;
 
 /**
  * 动态代理处理程序
- * created by yuyufeng on 2017/8/18.
+ * @date 2017/8/18.
+ * @author yuyufeng
  */
 public class ProxyHandler implements InvocationHandler {
     private long timeout = 1000; //超时等待时间
@@ -110,13 +111,6 @@ public class ProxyHandler implements InvocationHandler {
         ByteArrayOutputStream byteArrayOutputStream = null;
         try {
             socket = new Socket(remoteAddress.getAddress(), remoteAddress.getPort());
-            /*os = new ObjectOutputStream(socket.getOutputStream());
-            os.writeObject(rpcRequest);
-//             shutdownOutput():执行此方法，显示的告诉服务端发送完毕
-            socket.shutdownOutput();
-            //阻塞等待服务器响应
-            is = new ObjectInputStream(socket.getInputStream());
-            result = is.readObject();*/
             os = socket.getOutputStream();
             byte[] bytes = ProtostuffUtil.serializer(rpcRequest);
             os.write(bytes);

@@ -6,7 +6,9 @@ import top.yuyufeng.rpc.service.HelloService;
 import top.yuyufeng.rpc.service.top.yuyufeng.dto.MyResult;
 
 /**
- * created by yuyufeng on 2017/8/19.
+ * 服务调用 （客户端）
+ * @date 2017/8/19.
+ * @author yuyufeng
  */
 public class ClientApp {
     public static void main(String[] args) {
@@ -23,7 +25,7 @@ public class ClientApp {
         System.out.println(myResult);
 
         //启动10个线程去请求
-       /* for (int i = 0; i < 10; i++) {
+      /*  for (int i = 0; i < 10; i++) {
             new Thread(){
                 @Override
                 public void run() {
@@ -35,7 +37,7 @@ public class ClientApp {
                     }
                 }
             }.start();
-        }*/
-
+        }
+*/
     }
 }

@@ -3,7 +3,9 @@ package top.yuyufeng.rpc.service.top.yuyufeng.dto;
 import java.io.Serializable;
 
 /**
- * Created by yuyufeng on 2017/8/24.
+ * 测试实体类
+ * @author yuyufeng
+ * @date 2017/8/24
  */
 public class MyResult{
     private Long id;

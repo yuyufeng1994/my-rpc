@@ -12,7 +12,9 @@ import java.lang.reflect.Method;
 import java.util.Date;
 
 /**
- * Created by yuyufeng on 2017/8/28.
+ *
+ * @author yuyufeng
+ * @date 2017/8/28
  */
 public class MyServerHandler extends ChannelInboundHandlerAdapter {
     @Override

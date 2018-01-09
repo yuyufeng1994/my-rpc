@@ -3,7 +3,8 @@ package top.yuyufeng.rpc.service.impl;
 import top.yuyufeng.rpc.service.HelloService;
 
 /**
- * created by yuyufeng on 2017/8/18.
+ * 测试Service HelloServiceImpl
+ * @author yuyufeng
  */
 public class HelloServiceImpl implements HelloService {
     @Override

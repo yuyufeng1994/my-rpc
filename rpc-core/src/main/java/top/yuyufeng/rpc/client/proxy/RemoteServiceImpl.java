@@ -6,7 +6,8 @@ import java.util.concurrent.Executors;
 
 /**
  *
- * created by yuyufeng on 2017/8/19.
+ * @date 2017/8/19.
+ * @author yuyufeng
  */
 public class RemoteServiceImpl<T> {
     /**

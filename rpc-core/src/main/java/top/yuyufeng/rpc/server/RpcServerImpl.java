@@ -27,7 +27,7 @@ public class RpcServerImpl implements RpcServer {
         this.nThreads = nThreads;
         RegisterServicesCenter.init(zookeeperHost, port);
         init();
-        if (isStart == Boolean.TRUE) {
+        if (isStart.equals(Boolean.TRUE)) {
             start();
         }
     }
@@ -43,7 +43,7 @@ public class RpcServerImpl implements RpcServer {
             @Override
             public void run() {
                 isAlive = true;
-                myServer = new MyServer(port,nThreads);
+                myServer = new MyServer(port, nThreads);
                 myServer.start();
             }
         }.start();
@@ -59,7 +59,7 @@ public class RpcServerImpl implements RpcServer {
     @Override
     public void register(String className, Class clazz) throws Exception {
         RegisterServicesCenter.addServices(className, clazz);
-        System.out.println(className+" "+clazz);
+        System.out.println(className + " " + clazz);
         System.out.println("注册服务:" + className);
     }
 

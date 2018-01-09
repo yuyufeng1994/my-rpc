@@ -14,7 +14,9 @@ import java.net.InetSocketAddress;
 
 
 /**
- * Created by yuyufeng on 2017/8/28.
+ * 客户端Netty实现
+ * @author yuyufeng
+ * @date 2017/8/28
  */
 public class MyNettyClient {
 

@@ -9,11 +9,13 @@ import top.yuyufeng.rpc.service.impl.CalServiceImpl;
 import top.yuyufeng.rpc.service.impl.HelloServiceImpl;
 
 /**
- * created by yuyufeng on 2017/8/19.
+ * 服务启动
+ * @date 2017/8/19.
+ * @author yuyufeng
  */
 public class ServerApp {
     public static void main(String[] args) throws Exception {
-        RpcServer rpcServer = new RpcServerImpl(7878,5,"127.0.0.1:2181",false);
+        RpcServer rpcServer = new RpcServerImpl(7878,5,"127.0.0.1:2181",true);
         //暴露HelloService接口，具体实现为HelloServiceImpl
         rpcServer.register(HelloService.class.getName(),HelloServiceImpl.class);
         rpcServer.register(CalService.class.getName(),CalServiceImpl.class);

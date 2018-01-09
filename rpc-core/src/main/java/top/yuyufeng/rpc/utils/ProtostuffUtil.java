@@ -1,9 +1,5 @@
 package top.yuyufeng.rpc.utils;
 
-/**
- * Created by yuyufeng on 2017/8/24.
- */
-
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
@@ -12,6 +8,10 @@ import com.dyuproject.protostuff.runtime.RuntimeSchema;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 序列化工具
+ * @author yuyufeng
+ */
 public class ProtostuffUtil {
 
     private static Map<Class<?>, Schema<?>> cachedSchema = new ConcurrentHashMap<Class<?>, Schema<?>>();

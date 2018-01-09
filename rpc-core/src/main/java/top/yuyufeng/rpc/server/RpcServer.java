@@ -1,7 +1,9 @@
 package top.yuyufeng.rpc.server;
 
 /**
- * created by yuyufeng on 2017/8/19.
+ * RPC服务
+ * @date 2017/8/19.
+ * @author yuyufeng
  */
 public interface RpcServer {
     /**

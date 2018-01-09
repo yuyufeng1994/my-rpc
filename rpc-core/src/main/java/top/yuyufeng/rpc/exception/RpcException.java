@@ -1,7 +1,9 @@
 package top.yuyufeng.rpc.exception;
 
 /**
- * created by yuyufeng on 2017/8/19.
+ * 异常处理类
+ * @date 2017/8/19.
+ * @author yuyufeng
  */
 public class RpcException extends Exception {
     public RpcException() {
