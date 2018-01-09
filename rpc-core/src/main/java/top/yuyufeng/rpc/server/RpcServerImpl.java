@@ -16,6 +16,7 @@ public class RpcServerImpl implements RpcServer {
     private boolean isAlive = false;
     private int port = 8989;
     private MyServer myServer;
+    private final static ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public RpcServerImpl() {
         init();
@@ -39,15 +40,14 @@ public class RpcServerImpl implements RpcServer {
     @Override
     public void start() {
         System.out.println("开始启动Rpc服务");
-        new Thread() {
+        executor.execute(new Runnable() {
             @Override
             public void run() {
                 isAlive = true;
                 myServer = new MyServer(port, nThreads);
                 myServer.start();
             }
-        }.start();
-
+        });
     }
 
     @Override

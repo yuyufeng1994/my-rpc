@@ -21,7 +21,5 @@ public class ServerApp {
         rpcServer.register(CalService.class.getName(),CalServiceImpl.class);
         //启动rpc服务
         rpcServer.start();
-
-
     }
 }

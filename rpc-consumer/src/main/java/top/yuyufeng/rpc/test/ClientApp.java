@@ -12,6 +12,9 @@ import top.yuyufeng.rpc.service.top.yuyufeng.dto.MyResult;
  */
 public class ClientApp {
     public static void main(String[] args) {
+        //设置Zookeeper的地址
+        RemoteServiceImpl.setZookeeperAddress("127.0.0.1:2181");
+
         //获取动态代理的HelloService的“真实对象（其实内部不是真实的，被换成了调用远程方法）”
         HelloService helloService = RemoteServiceImpl.newRemoteProxyObject(HelloService.class);
         String result = helloService.sayHello("yyf");
@@ -24,8 +27,8 @@ public class ClientApp {
         myResult = calService.getResult(3, 2);
         System.out.println(myResult);
 
-        //启动10个线程去请求
-      /*  for (int i = 0; i < 10; i++) {
+        /*//启动10个线程去请求
+        for (int i = 0; i < 10; i++) {
             new Thread(){
                 @Override
                 public void run() {
@@ -37,7 +40,9 @@ public class ClientApp {
                     }
                 }
             }.start();
-        }
-*/
+        }*/
+
+
+
     }
 }

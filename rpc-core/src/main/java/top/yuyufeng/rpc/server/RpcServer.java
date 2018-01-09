@@ -26,4 +26,6 @@ public interface RpcServer {
      * @return
      */
     boolean isAlive();
+
+
 }
