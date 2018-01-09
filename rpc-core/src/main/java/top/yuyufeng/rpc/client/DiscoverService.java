@@ -74,4 +74,12 @@ public class DiscoverService {
     public static void setZookeeperHost(String zookeeperHost) {
         ZOOKEEPER_HOST = zookeeperHost;
     }
+
+
+    /**
+     * 优化
+     * 这里可以增加一个定时器，其扫描服务端的服务是否可用，如果不可用，剔除 sevices
+     */
+
+
 }
