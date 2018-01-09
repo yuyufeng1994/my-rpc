@@ -52,7 +52,7 @@
 版本说明
 --
  > 项目随着主干进行下去
-* [master](https://github.com/yyfyyf1994/my-rpc/) 在上个版本基础上，增加Cluster层（计划支持Spring启动）
+* [master](https://github.com/yyfyyf1994/my-rpc/) 在上个版本基础上，增加Cluster（负载）层（计划支持Spring启动）
 * [v3](https://github.com/yyfyyf1994/my-rpc/tree/v3)  在上个版本基础上，使用Netty4来操作NIO通信，不再是原来的多线程BIO。改变了通信方式，结构变化较大
 * [v2](https://github.com/yyfyyf1994/my-rpc/tree/v2)  在上个版本基础上，增加zookeeper注册发现，客户端服务端无需互相知道对方。增加Protostuff序列化（序列化效率高）
 * [v1](https://github.com/yyfyyf1994/my-rpc/tree/v1)  原始版本（bio多线程通信 客户端服务端直连）
