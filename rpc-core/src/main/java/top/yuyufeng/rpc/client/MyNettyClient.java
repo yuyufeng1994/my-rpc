@@ -15,12 +15,14 @@ import java.net.InetSocketAddress;
 
 /**
  * 客户端Netty实现
+ *
  * @author yuyufeng
  * @date 2017/8/28
  */
 public class MyNettyClient {
+    private static Integer TIMEOUT = 1000;
 
-    public static Object send(RpcRequest rpcRequest,InetSocketAddress inetSocketAddress){
+    public static Object send(RpcRequest rpcRequest, InetSocketAddress inetSocketAddress) {
         MyClientHandler myClientHandler = new MyClientHandler();
         // Configure the client.
         EventLoopGroup group = new NioEventLoopGroup();
@@ -29,7 +31,7 @@ public class MyNettyClient {
             b.group(group)
                     .channel(NioSocketChannel.class)
                     .option(ChannelOption.TCP_NODELAY, true)
-                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS,1000)
+                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, TIMEOUT)
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {

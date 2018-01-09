@@ -26,7 +26,6 @@ import java.util.concurrent.*;
  * @author yuyufeng
  */
 public class ProxyHandler implements InvocationHandler {
-    private long timeout = 1000; //超时等待时间
     private Class<?> service;
     //远程调用地址
     private InetSocketAddress remoteAddress;
