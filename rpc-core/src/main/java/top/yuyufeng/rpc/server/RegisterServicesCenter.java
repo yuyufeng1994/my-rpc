@@ -68,12 +68,12 @@ public class RegisterServicesCenter {
             byte[] ipsBytes = zookeeper.getData("/myrpc/" + className, false, null);
 
             String ips = new String(ipsBytes);
-            ips += ";"+localIp;
+            ips += ";" + localIp;
 
             //把当前服务的ip地址存如zookeeper中,供消费者-发现
             zookeeper.setData("/myrpc/" + className, ips.getBytes(), -1);
             ipsBytes = zookeeper.getData("/myrpc/" + className, false, null);
-            System.out.println("服务：" + className + " " + new String(ipsBytes)+" 注册完成");
+            System.out.println("服务：" + className + " " + new String(ipsBytes) + " 注册完成");
 
         } catch (KeeperException e) {
             e.printStackTrace();

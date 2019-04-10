@@ -26,7 +26,7 @@ public class DiscoverService {
         if (results != null) {
             return results;
         } else {
-            results = new ArrayList<InetSocketAddress>();
+            results = new ArrayList<>();
         }
 
         ZooKeeper zookeeper = null;

@@ -1,7 +1,5 @@
 package top.yuyufeng.rpc.service.top.yuyufeng.dto;
 
-import java.io.Serializable;
-
 /**
  * 测试实体类
  * @author yuyufeng

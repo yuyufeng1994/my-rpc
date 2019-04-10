@@ -17,8 +17,8 @@
 
     <!--服务注册 start-->
     <util:map id="servicesMap" map-class="java.util.HashMap">
-        <entry key="helloService" value="top.yuyufeng.rpc.service.impl.HelloServiceImpl"/>
-        <entry key="calService" value="top.yuyufeng.rpc.service.impl.CalServiceImpl"/>
+        <entry key="top.yuyufeng.rpc.service.HelloService" value="top.yuyufeng.rpc.service.impl.HelloServiceImpl"/>
+        <entry key="top.yuyufeng.rpc.service.CalService" value="top.yuyufeng.rpc.service.impl.CalServiceImpl"/>
     </util:map>
 
     <bean id="rpcServerFactory" class="top.yuyufeng.rpc.server.spring.RpcServerFactory">

@@ -39,11 +39,16 @@ public class RpcServerImpl implements RpcServer {
 
     @Override
     public void start() {
-        System.out.println("开始启动Rpc服务");
+        synchronized (this){
+            if(isAlive){
+                return;
+            }
+        }
+        System.out.println("开始启动Rpc服务 线程数：" + nThreads);
+        isAlive = true;
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                isAlive = true;
                 myServer = new MyServer(port, nThreads);
                 myServer.start();
             }
@@ -59,8 +64,6 @@ public class RpcServerImpl implements RpcServer {
     @Override
     public void register(String className, Class clazz) throws Exception {
         RegisterServicesCenter.addServices(className, clazz);
-        System.out.println(className + " " + clazz);
-        System.out.println("注册服务:" + className);
     }
 
     @Override
