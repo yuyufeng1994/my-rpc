@@ -57,6 +57,7 @@
 
 更新日志
 ----
+>* 2019年4月11日增加结合Spring启动，服务端服务实例单例化
 >* 2017年8月29日 增加Cluster（负载）层
 之前初始版本已经建立分支[https://github.com/yuyufeng1994/my-rpc/tree/v3](https://github.com/yuyufeng1994/my-rpc/tree/v3)  
 >* 2017年8月28日 将原来的BIO通信改成了NIO，加入*Netty4*进行通信 
