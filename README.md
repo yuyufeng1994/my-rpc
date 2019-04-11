@@ -41,15 +41,16 @@
 版本说明
 --
  > 项目随着主干进行下去
-* [master](https://github.com/yuyufeng1994/my-rpc/) 在上个版本基础上，增加Cluster（负载）层（计划支持Spring启动）
-* [v3](https://github.com/yuyufeng1994/my-rpc/tree/v3)  在上个版本基础上，使用Netty4来操作NIO通信，不再是原来的多线程BIO。改变了通信方式，结构变化较大
+* [master](https://github.com/yuyufeng1994/my-rpc/) 
+* [v4](https://github.com/yuyufeng1994/my-rpc/) 增加Cluster（负载）层,结合Spring启动
+* [v3](https://github.com/yuyufeng1994/my-rpc/tree/v3)  使用Netty4来操作NIO通信，不再是原来的多线程BIO。改变了通信方式，结构变化较大
 * [v2](https://github.com/yuyufeng1994/my-rpc/tree/v2)  在上个版本基础上，增加zookeeper注册发现，客户端服务端无需互相知道对方。增加Protostuff序列化（序列化效率高）
 * [v1](https://github.com/yuyufeng1994/my-rpc/tree/v1)  原始版本（bio多线程通信 客户端服务端直连）
 
 
 更新日志
 ----
->* 2017年8月29日 增加Sping启动服务端
+>* 2017年8月29日 增加Cluster（负载）层
 之前初始版本已经建立分支[https://github.com/yuyufeng1994/my-rpc/tree/v3](https://github.com/yuyufeng1994/my-rpc/tree/v3)  
 >* 2017年8月28日 将原来的BIO通信改成了NIO，加入*Netty4*进行通信 
 之前初始版本已经建立分支[https://github.com/yuyufeng1994/my-rpc/tree/v2](https://github.com/yuyufeng1994/my-rpc/tree/v2)  
