@@ -10,13 +10,19 @@ import top.yuyufeng.rpc.utils.ProtostuffUtil;
 
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- *
  * @author yuyufeng
  * @date 2017/8/28
  */
 public class MyServerHandler extends ChannelInboundHandlerAdapter {
+    /**
+     * 单利存放实例化之后的服务
+     */
+    private static Map<String, Object> serviceObjects = new ConcurrentHashMap<>();
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RpcRequest rpcRequest = (RpcRequest) msg;
@@ -28,7 +34,12 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
         if (method == null) {
             throw new RpcException("没有找到相应方法 " + rpcRequest.getMethodName());
         }
-        //执行真正要调用的方法。对于实例都不是单利模式的，每次都clazz.newInstance()，有待改进
+        //执行真正要调用的方法。
+        Object object = serviceObjects.get(clazz.getName());
+        if (object == null) {
+            object = clazz.newInstance();
+            serviceObjects.put(clazz.getName(), object);
+        }
         Object result = method.invoke(clazz.newInstance(), rpcRequest.getArguments());
         //返回执行结果给客户端
         RpcResponse rpcResponse = new RpcResponse(result);
