@@ -33,9 +33,6 @@ public class MyServerHandler extends ChannelInboundHandlerAdapter {
         //返回执行结果给客户端
         RpcResponse rpcResponse = new RpcResponse(result);
         ctx.writeAndFlush(rpcResponse).addListener(ChannelFutureListener.CLOSE);
-        /*System.out.println(msg);
-        myRequest.setRequestTime(new Date());
-        ctx.writeAndFlush(myRequest).addListener(ChannelFutureListener.CLOSE);*/
     }
 
     @Override

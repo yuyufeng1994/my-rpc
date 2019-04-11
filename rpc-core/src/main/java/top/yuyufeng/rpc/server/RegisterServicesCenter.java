@@ -16,16 +16,15 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author yuyufeng
  */
 public class RegisterServicesCenter {
-    private static String zookeeperHost;
+    private static String zookeeperAddress;
     private static ZooKeeper zookeeper;
     private static int TIME_OUT = 10000;
     private static String localIp;
 
-    public static void init(String zookeeperHost, int localPort) {
-        RegisterServicesCenter.zookeeperHost = zookeeperHost;
+    public static void init(String zookeeperAddress, int localPort) {
+        RegisterServicesCenter.zookeeperAddress = zookeeperAddress;
         try {
-            zookeeper = new ZooKeeper(zookeeperHost, TIME_OUT, null);
-
+            zookeeper = new ZooKeeper(zookeeperAddress, TIME_OUT, null);
             //提供层的ip,这里存放本机的ip
             localIp = InetAddress.getLocalHost().getHostAddress() + ":" + localPort;
         } catch (IOException e) {

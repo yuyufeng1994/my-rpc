@@ -12,19 +12,16 @@
         <property name="nThreads" value="5"/>
         <!--zookeeperHost地址-->
         <property name="zookeeperAddress" value="127.0.0.1:2181"/>
-
     </bean>
 
-    <!--服务注册 start-->
-    <util:map id="servicesMap" map-class="java.util.HashMap">
-        <entry key="top.yuyufeng.rpc.service.HelloService" value="top.yuyufeng.rpc.service.impl.HelloServiceImpl"/>
-        <entry key="top.yuyufeng.rpc.service.CalService" value="top.yuyufeng.rpc.service.impl.CalServiceImpl"/>
+    <util:map id="referenceMap" map-class="java.util.HashMap">
+        <entry key="helloService" value="top.yuyufeng.rpc.service.HelloService"/>
+        <entry key="calService" value="top.yuyufeng.rpc.service.CalService"/>
     </util:map>
 
-    <bean id="rpcServerFactory" class="top.yuyufeng.rpc.server.spring.RpcServerFactory">
-        <property name="myRpcConfig" ref="myRpcConfig"/>
-        <property name="services" ref="servicesMap"/>
+    <bean id="myRpcReference" class="top.yuyufeng.rpc.client.spring.MyRpcReference">
+        <property name="references" ref="referenceMap"/>
     </bean>
 
-    <!--服务注册 end-->
+
 </beans>

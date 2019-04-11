@@ -10,6 +10,7 @@ public class MyRpcConfig {
     private String zookeeperAddress;
 
     public MyRpcConfig() {
+
     }
 
 
