@@ -31,8 +31,15 @@
 
 启动调试
 --
->使用HelloService接口进行调试。首先运行zookeeper服务，默认本地ip。接着启动提供层：在rpc-provider模块中运行top.yuyufeng.rpc.ServerApp.Main
-然后启动消费层：在rpc-consumer模块中运行top.yuyufeng.rpc.test.ClientApp.Main
+* 使用HelloService接口进行调试。首先运行zookeeper服务，默认本地ip。
+* 启动提供层：在rpc-provider模块中运行top.yuyufeng.rpc.ServerApp.Main
+* 启动消费层：在rpc-consumer模块中运行top.yuyufeng.rpc.test.ClientApp.Main
+
+启动调试（使用Spring）
+--
+* 使用HelloService接口进行调试。首先运行zookeeper服务，默认本地ip。
+* 启动提供层：在rpc-provider模块中运行top.yuyufeng.rpc.ServerAppBySpring
+* 启动消费层：在rpc-consumer模块中运行top.yuyufeng.rpc.test.ClientAppSpring
 
 缺陷
 --
