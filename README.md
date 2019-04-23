@@ -1,5 +1,7 @@
 # my-rpc  
 >了解RPC的一些原理后，尝试自己造个轮子，加深了解。
+如果你对RPC的原理和运行机制还不够了解，我更希望你从最简单的版本开始了解。
+[https://github.com/yuyufeng1994/my-rpc/tree/v1](https://github.com/yuyufeng1994/my-rpc/tree/v1)  
 
 个人对rpc原理的见解
 ---
